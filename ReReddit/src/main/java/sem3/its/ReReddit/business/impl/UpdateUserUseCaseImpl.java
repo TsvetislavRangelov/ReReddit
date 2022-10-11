@@ -2,7 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.UpdateUserUseCase;
+import sem3.its.ReReddit.business.services.UpdateUserUseCase;
 import sem3.its.ReReddit.business.exception.InvalidUserException;
 import sem3.its.ReReddit.business.exception.UsernameAlreadyExistsException;
 import sem3.its.ReReddit.domain.UpdateUserRequest;

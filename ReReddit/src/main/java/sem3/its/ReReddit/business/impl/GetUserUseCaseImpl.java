@@ -2,12 +2,11 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.GetUserUseCase;
+import sem3.its.ReReddit.business.services.GetUserUseCase;
 import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
 import sem3.its.ReReddit.domain.User;
 import sem3.its.ReReddit.persistence.UserRepository;
 
-import javax.annotation.Resource;
 import java.util.Optional;
 
 @Service

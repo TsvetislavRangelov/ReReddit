@@ -2,7 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.CreateUserUseCase;
+import sem3.its.ReReddit.business.services.CreateUserUseCase;
 import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;
 import sem3.its.ReReddit.business.exception.UsernameAlreadyExistsException;
 import sem3.its.ReReddit.domain.CreateUserRequest;
@@ -10,7 +10,7 @@ import sem3.its.ReReddit.domain.CreateUserResponse;
 import sem3.its.ReReddit.domain.Enums.Role;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
-import sem3.its.ReReddit.utils.PasswordHasher;
+import sem3.its.ReReddit.business.security.PasswordHasher;
 
 @Service
 @AllArgsConstructor
@@ -43,7 +43,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                         .username(request.getUsername())
                         .password(hash)
                         .email(request.getEmail())
-                        .role(Role.STANDARD)
+                        .role(Role.valueOf("STANDARD"))
                         .build();
                 return userRepository.save(userEntity);
         }

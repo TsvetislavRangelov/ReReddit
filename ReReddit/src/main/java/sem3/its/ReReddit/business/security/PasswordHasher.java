@@ -1,4 +1,4 @@
-package sem3.its.ReReddit.utils;
+package sem3.its.ReReddit.business.security;
 
 
 public interface PasswordHasher {

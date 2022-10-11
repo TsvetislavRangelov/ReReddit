@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sem3.its.ReReddit.business.*;
+import sem3.its.ReReddit.business.services.*;
 import sem3.its.ReReddit.domain.*;
 
 import javax.validation.*;

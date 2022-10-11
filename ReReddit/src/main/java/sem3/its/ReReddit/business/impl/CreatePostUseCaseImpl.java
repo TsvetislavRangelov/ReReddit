@@ -2,7 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.CreatePostUseCase;
+import sem3.its.ReReddit.business.services.CreatePostUseCase;
 import sem3.its.ReReddit.business.exception.PostHasNoAuthorException;
 import sem3.its.ReReddit.domain.CreatePostRequest;
 import sem3.its.ReReddit.domain.CreatePostResponse;

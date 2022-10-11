@@ -1,4 +1,4 @@
-package sem3.its.ReReddit.business;
+package sem3.its.ReReddit.business.services;
 
 import sem3.its.ReReddit.domain.User;
 

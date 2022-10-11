@@ -1,9 +1,10 @@
-package sem3.its.ReReddit.utils;
+package sem3.its.ReReddit.business.impl;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sem3.its.ReReddit.business.security.PasswordVerifier;
 
 @AllArgsConstructor
 @Service

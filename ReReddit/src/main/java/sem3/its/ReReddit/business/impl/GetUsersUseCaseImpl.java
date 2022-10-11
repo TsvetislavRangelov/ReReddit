@@ -2,7 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.GetUsersUseCase;
+import sem3.its.ReReddit.business.services.GetUsersUseCase;
 import sem3.its.ReReddit.domain.GetUsersResponse;
 import sem3.its.ReReddit.domain.User;
 import sem3.its.ReReddit.persistence.UserRepository;

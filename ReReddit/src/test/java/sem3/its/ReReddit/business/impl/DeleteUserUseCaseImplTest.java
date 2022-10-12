@@ -17,9 +17,6 @@ public class DeleteUserUseCaseImplTest {
     @Mock
     private UserRepository userRepositoryMock;
 
-    @InjectMocks
-    private DeleteUserUseCaseImpl deleteUserUseCase;
-
     @Test
     void deleteUser_ShouldDeleteUserFromRepo(){
         UserEntity user = UserEntity.builder().id(2L).username("u2").build();

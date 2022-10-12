@@ -37,6 +37,7 @@ public class GetUserUseCaseImplTest {
         User expected = User.builder().id(1L).username("user1").build();
 
         // actual can be null but since this is a test no checks are done to verify it
+        assert actual.orElse(null) != null;
         assertEquals(expected.getId(), actual.orElse(null).getId());
 
         verify(userRepositoryMock).findById(1L);

@@ -7,16 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
-    private Long id;
-    private User author;
-    private String header;
-    private String body;
-    private int ups;
-    private int downs;
-    private int comments;
+public class GetPostsResponse {
+    private List<Post> posts;
 }

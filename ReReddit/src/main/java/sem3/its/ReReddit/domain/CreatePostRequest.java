@@ -4,19 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sem3.its.ReReddit.persistence.entity.UserEntity;
 
-import java.util.List;
-
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
-    private Long id;
-    private User author;
+@Data
+@Builder
+public class CreatePostRequest {
+    private UserEntity author;
     private String header;
     private String body;
-    private int ups;
-    private int downs;
-    private int comments;
+
+
 }

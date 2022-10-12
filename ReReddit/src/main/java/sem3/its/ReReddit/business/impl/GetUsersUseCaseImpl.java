@@ -2,10 +2,11 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.GetUsersUseCase;
+import sem3.its.ReReddit.business.services.GetUsersUseCase;
 import sem3.its.ReReddit.domain.GetUsersResponse;
 import sem3.its.ReReddit.domain.User;
 import sem3.its.ReReddit.persistence.UserRepository;
+import sem3.its.ReReddit.persistence.entity.UserEntity;
 
 import java.util.List;
 
@@ -17,7 +18,16 @@ public class GetUsersUseCaseImpl implements GetUsersUseCase {
 
     @Override
     public GetUsersResponse getUsers(){
-        return null;
+        List<UserEntity> results;
+        results = userRepository.findAll();
 
+        final GetUsersResponse res = new GetUsersResponse();
+        List<User> users =results
+                .stream()
+                .map(UserConverter::convert)
+                .toList();
+        res.setUsers(users);
+
+        return res;
     }
 }

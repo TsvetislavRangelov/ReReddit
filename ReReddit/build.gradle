@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id "io.freefair.lombok" version "6.5.1"
 
+
 }
 
 group = 'sem3.its'
@@ -15,6 +16,7 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -22,6 +24,13 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation 'mysql:mysql-connector-java:8.0.30'
+	testImplementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.4'
+	testImplementation 'com.playtika.testcontainers:embedded-mysql:2.2.8'
+	implementation 'org.flywaydb:flyway-core:9.3.0'
+	implementation 'org.flywaydb:flyway-mysql:9.3.0'
+	implementation 'de.mkammerer:argon2-jvm:2.11'
 }
 
 tasks.named('test') {

@@ -1,19 +1,9 @@
 package sem3.its.ReReddit.persistence;
+import org.springframework.data.jpa.repository.JpaRepository;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 
 import java.util.List;
 
-public interface PostRepository {
-
-    PostEntity save(PostEntity entity);
-
-    List<PostEntity> findAll();
-
-    int count();
-
-    PostEntity findById(Long id);
-
-    boolean existsById(Long id);
-
+public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
 }

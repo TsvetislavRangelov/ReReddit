@@ -6,20 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import sem3.its.ReReddit.domain.Enums.Role;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-
-public class User {
-    private Long id;
+public class CreateUserRequest {
     @NotNull
     private String username;
+    @NotNull
+    @NotBlank
     private String password;
+    @NotNull
+    @NotBlank
     private String email;
-    private Role role;
+
 }

@@ -12,7 +12,7 @@ import javax.validation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {

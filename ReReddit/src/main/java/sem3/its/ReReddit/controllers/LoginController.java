@@ -11,7 +11,7 @@ import sem3.its.ReReddit.domain.LoginRequest;
 import sem3.its.ReReddit.domain.LoginResponse;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/login")
 @AllArgsConstructor
 public class LoginController {

@@ -21,7 +21,7 @@ public class LoginController {
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest request){
         LoginResponse res = loginUseCase.login(request);
 
-        return res != null ? ResponseEntity.status(HttpStatus.OK).body(res) : ResponseEntity.status(HttpStatus.NOT_FOUND).body(null) ;
+        return ResponseEntity.ok(res);
 
 
     }

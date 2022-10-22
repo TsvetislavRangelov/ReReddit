@@ -8,6 +8,7 @@ import sem3.its.ReReddit.domain.Enums.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -31,4 +32,8 @@ public class UserEntity {
     private String password;
     @Column(name = "role")
     private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private Set<UserRoleEntity> userRoles;
 }

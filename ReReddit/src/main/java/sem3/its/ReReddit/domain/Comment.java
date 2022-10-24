@@ -20,5 +20,4 @@ public class Comment {
     private int ups;
     private int downs;
     private Comment parent;
-    private List<Comment> children;
 }

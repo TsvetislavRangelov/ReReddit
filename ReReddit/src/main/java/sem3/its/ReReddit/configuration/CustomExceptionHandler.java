@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;
-import sem3.its.ReReddit.business.exception.PostHasNoAuthorException;
-import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
-import sem3.its.ReReddit.business.exception.UsernameAlreadyExistsException;
+import sem3.its.ReReddit.business.exception.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -56,5 +53,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             err.put("status", HttpStatus.BAD_REQUEST.toString());
 
             return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+        }
+
+        @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> HandleInvalidCredentialsException(InvalidCredentialsException exception){
+        Map<String, String> err = new HashMap<>();
+        err.put("timestamp", LocalDateTime.now().toString());
+        err.put("message", exception.getMessage());
+        err.put("status", HttpStatus.BAD_REQUEST.toString());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
         }
 }

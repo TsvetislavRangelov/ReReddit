@@ -18,15 +18,4 @@ public class CommentConverter {
         BeanUtils.copyProperties(entity, converted);
         return converted;
     }
-
-    public static List<Comment> convertList(List<CommentEntity> list){
-        if(list == null){
-            return Collections.emptyList();
-        }
-        List<Comment> convertedList = new ArrayList<>();
-        for (CommentEntity c : list) {
-            convertedList.add(convert(c));
-        }
-        return convertedList;
-    }
 }

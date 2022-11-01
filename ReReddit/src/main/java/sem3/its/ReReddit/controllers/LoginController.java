@@ -11,7 +11,7 @@ import sem3.its.ReReddit.domain.LoginRequest;
 import sem3.its.ReReddit.domain.LoginResponse;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping("/login")
 @AllArgsConstructor
 public class LoginController {
@@ -21,7 +21,7 @@ public class LoginController {
     public ResponseEntity<LoginResponse> login(@RequestBody @Validated LoginRequest request){
         LoginResponse res = loginUseCase.login(request);
 
-        return res != null ? ResponseEntity.status(HttpStatus.OK).body(res) : null ;
+        return ResponseEntity.ok(res);
 
 
     }

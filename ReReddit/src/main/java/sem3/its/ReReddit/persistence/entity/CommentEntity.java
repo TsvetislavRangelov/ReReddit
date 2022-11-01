@@ -17,5 +17,4 @@ public class CommentEntity {
     private int ups;
     private int downs;
     private CommentEntity parent;
-    private List<CommentEntity> children;
 }

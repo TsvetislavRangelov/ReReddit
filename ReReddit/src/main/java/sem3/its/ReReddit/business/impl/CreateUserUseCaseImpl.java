@@ -43,7 +43,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                         .username(request.getUsername())
                         .password(hash)
                         .email(request.getEmail())
-                        .role(Role.valueOf("STANDARD"))
+                        .role(Role.STANDARD)
                         .build();
                 return userRepository.save(userEntity);
         }

@@ -8,6 +8,7 @@ variables:
 stages:
   - build
   - test
+  - scan
 
 build:
   stage: build
@@ -20,3 +21,9 @@ test:
   script:
     - cd .\ReReddit\
     - ./gradlew test
+
+scan:
+  stage: scan
+  script:
+    - cd .\ReReddit\
+    - ./gradlew sonarqube

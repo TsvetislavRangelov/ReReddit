@@ -7,7 +7,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import sem3.its.ReReddit.business.exception.InvalidAccessTokenException;
@@ -24,7 +27,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class AccessTokenEncoderDecoderImpl implements AccessTokenEncoder, AccessTokenDecoder {
+    @Autowired
+    private Environment env;
 
     private final Key key;
 

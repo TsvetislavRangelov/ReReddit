@@ -8,6 +8,7 @@ variables:
 stages:
   - build
   - test
+  - scan
 
 build:
   stage: build
@@ -20,3 +21,10 @@ test:
   script:
     - cd .\ReReddit\
     - ./gradlew test
+
+scan:
+  stage: scan
+  script:
+    - cd .\ReReddit\
+    - docker run -d --name sem3.its.ReReddit -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:lts-community
+    - ./gradlew sonarqube

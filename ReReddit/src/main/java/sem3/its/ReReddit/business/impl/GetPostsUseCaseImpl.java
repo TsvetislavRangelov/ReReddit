@@ -9,6 +9,7 @@ import sem3.its.ReReddit.persistence.PostRepository;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class GetPostsUseCaseImpl implements GetPostsUseCase {
         List<Post> posts = results
                 .stream()
                 .map(PostConverter::convert)
-                .toList();
+                .collect(Collectors.toList());
         res.setPosts(posts);
         return res;
     }

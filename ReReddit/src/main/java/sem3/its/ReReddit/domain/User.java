@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import sem3.its.ReReddit.domain.Enums.Role;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 
 @Builder

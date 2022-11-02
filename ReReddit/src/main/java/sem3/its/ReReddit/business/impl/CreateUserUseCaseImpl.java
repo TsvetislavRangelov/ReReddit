@@ -1,8 +1,6 @@
 package sem3.its.ReReddit.business.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import sem3.its.ReReddit.business.services.CreateUserUseCase;
 import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;

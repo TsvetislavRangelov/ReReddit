@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import sem3.its.ReReddit.business.services.CreatePostUseCase;
 import sem3.its.ReReddit.business.services.GetPostUseCase;
 import sem3.its.ReReddit.business.services.GetPostsUseCase;
+import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.CreatePostRequest;
 import sem3.its.ReReddit.domain.CreatePostResponse;
 import sem3.its.ReReddit.domain.GetPostsResponse;
@@ -38,6 +39,7 @@ public class PostController {
         }
         return ResponseEntity.ok().body(postOptional.get());
     }
+
     @PostMapping
     public ResponseEntity<CreatePostResponse> createPost(@RequestBody @Validated CreatePostRequest request){
         CreatePostResponse res = createPostUseCase.createPost(request);

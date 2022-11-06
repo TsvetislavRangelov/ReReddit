@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sem3.its.ReReddit.business.services.*;
+import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
 import javax.validation.*;
@@ -43,12 +44,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
+    @IsAuthenticated
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         deleteUserUseCase.deleteUser((id));
         return ResponseEntity.noContent().build();
     }
 
+    @IsAuthenticated
     @PatchMapping("{id}")
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody @Valid UpdateUserRequest request){
         request.setId(id);

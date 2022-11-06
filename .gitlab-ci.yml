@@ -27,3 +27,5 @@ scan:
   script:
     - cd .\ReReddit\
     - ./gradlew sonarqube
+  only:
+    - merge_requests

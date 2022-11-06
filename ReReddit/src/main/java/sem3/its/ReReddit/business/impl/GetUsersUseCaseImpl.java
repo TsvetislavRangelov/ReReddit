@@ -9,6 +9,7 @@ import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class GetUsersUseCaseImpl implements GetUsersUseCase {
         List<User> users =results
                 .stream()
                 .map(UserConverter::convert)
-                .toList();
+                .collect(Collectors.toList());
         res.setUsers(users);
 
         return res;

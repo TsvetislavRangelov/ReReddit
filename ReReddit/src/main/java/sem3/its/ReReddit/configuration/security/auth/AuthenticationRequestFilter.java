@@ -16,9 +16,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class AuthenticationRequestFilter extends OncePerRequestFilter {
-    private final static String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";
+    private static final String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";
 
     @Autowired
     private AccessTokenDecoder accessTokenDecoder;
@@ -54,7 +55,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
                 accessToken.getRoles()
                         .stream()
                         .map(role -> new SimpleGrantedAuthority(SPRING_SECURITY_ROLE_PREFIX + role))
-                        .toList());
+                        .collect(Collectors.toList()));
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails, null, userDetails.getAuthorities());

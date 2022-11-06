@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DeleteUserUseCaseImplTest {
+ class DeleteUserUseCaseImplTest {
     @Mock
     private UserRepository userRepositoryMock;
 

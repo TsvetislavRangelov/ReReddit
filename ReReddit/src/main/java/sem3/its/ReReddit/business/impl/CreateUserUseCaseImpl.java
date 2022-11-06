@@ -1,6 +1,6 @@
 package sem3.its.ReReddit.business.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sem3.its.ReReddit.business.services.CreateUserUseCase;
 import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;
@@ -13,10 +13,12 @@ import sem3.its.ReReddit.persistence.entity.UserEntity;
 import sem3.its.ReReddit.business.security.PasswordHasher;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CreateUserUseCaseImpl implements CreateUserUseCase {
-    private UserRepository userRepository;
-    private PasswordHasher passwordHasher;
+    private final UserRepository userRepository;
+
+    private final PasswordHasher passwordHasher;
+
 
     @Override
     public CreateUserResponse createUser(CreateUserRequest request){

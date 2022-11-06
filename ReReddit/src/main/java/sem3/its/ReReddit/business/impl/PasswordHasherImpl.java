@@ -17,9 +17,7 @@ public class PasswordHasherImpl implements PasswordHasher {
 
             return argon2.hash(10, 65554, 1, password);
         }
-        catch(Exception ex){
-            ex.printStackTrace();
-        }
+        catch(Exception ignored){}
         finally{
             argon2.wipeArray(password);
         }

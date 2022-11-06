@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class GetUserUseCaseImplTest {
+ class GetUserUseCaseImplTest {
     @Mock
     private UserRepository userRepositoryMock;
 

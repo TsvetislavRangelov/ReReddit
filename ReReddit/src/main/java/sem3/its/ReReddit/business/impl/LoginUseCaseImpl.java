@@ -12,8 +12,8 @@ import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -43,8 +43,9 @@ public class LoginUseCaseImpl implements LoginUseCase {
     }
 
     private String generateAccessToken(UserEntity user){
-        Long id = user != null ? user.getId() : null;
-        List<String> roles = user.getUserRoles().stream().map(userRole -> userRole.getRole().toString()).toList();
+        assert user != null;
+        Long id = user.getId();
+        List<String> roles = user.getUserRoles().stream().map(userRole -> userRole.getRole().toString()).collect(Collectors.toList());
 
         return encoder.encode(
                 AccessToken.builder()

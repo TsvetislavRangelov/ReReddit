@@ -6,7 +6,7 @@ CREATE TABLE comment
     post_id int NOT NULL,
     ups int,
     downs int,
-    parent_id int NOT NULL,
+    parent_id int,
     created_at DATE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (author_id) REFERENCES user (id),

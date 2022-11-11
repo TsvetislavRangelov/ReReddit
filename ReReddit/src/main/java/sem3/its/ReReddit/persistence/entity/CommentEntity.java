@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comment")
@@ -21,13 +21,14 @@ public class CommentEntity {
     private Long id;
     @OneToOne
     private UserEntity author;
+    @Column
     private String body;
     @ManyToOne
     private PostEntity post;
+    @Column
     private int ups;
+    @Column
     private int downs;
-    @OneToOne
-    private CommentEntity parent;
-
-    private Date createdAt;
+    @Column
+    private LocalDateTime createdAt;
 }

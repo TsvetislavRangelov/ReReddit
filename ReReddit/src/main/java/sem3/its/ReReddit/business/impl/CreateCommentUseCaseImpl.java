@@ -15,6 +15,7 @@ import sem3.its.ReReddit.persistence.entity.CommentEntity;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -27,30 +28,27 @@ public class CreateCommentUseCaseImpl implements CreateCommentUseCase {
     public CreateCommentResponse createComment(CreateCommentRequest request){
         CommentEntity created = saveNewComment(request);
 
-        if(created != null){
-            return CreateCommentResponse.builder()
-                    .id(created.getId())
-                    .build();
-        }
-        throw new CommentCreationException("SERVER_ERROR");
+        return CreateCommentResponse.builder()
+                .id(created.getId())
+                .build();
     }
 
     private CommentEntity saveNewComment(CreateCommentRequest request) throws InvalidRequestBodyException{
-        Optional<UserEntity> author = userRepository.findById(request.getAuthor_id());
-
-        Optional<PostEntity> post = postRepository.findById(request.getPost_id());
-
-
-        return author.isPresent() && post.isPresent() ? commentRepository
-                .save(
-                        CommentEntity.builder().body(request.getBody())
-                                .downs(0)
-                                .ups(0)
-                                .author(author.get())
-                                .post(post.get())
-                                .parent(null)
-                                .build()
-                ) : null;
+        System.out.println(request.getAuthor());
+        System.out.println(request.getPost());
+       if(!userRepository.existsById(request.getAuthor().getId()) &&
+               !postRepository.existsById(request.getPost().getId())){
+          throw new InvalidRequestBodyException();
+       }
+        CommentEntity commentEntity = CommentEntity.builder()
+                .ups(0)
+                .downs(0)
+                .author(request.getAuthor())
+                .post(request.getPost())
+                .body(request.getBody())
+                .createdAt(LocalDateTime.now())
+                .build();
+        return commentRepository.save(commentEntity);
     }
 
 }

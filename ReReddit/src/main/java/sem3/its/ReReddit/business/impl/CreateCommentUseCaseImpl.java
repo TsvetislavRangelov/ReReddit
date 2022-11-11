@@ -34,8 +34,6 @@ public class CreateCommentUseCaseImpl implements CreateCommentUseCase {
     }
 
     private CommentEntity saveNewComment(CreateCommentRequest request) throws InvalidRequestBodyException{
-        System.out.println(request.getAuthor());
-        System.out.println(request.getPost());
        if(!userRepository.existsById(request.getAuthor().getId()) &&
                !postRepository.existsById(request.getPost().getId())){
           throw new InvalidRequestBodyException();

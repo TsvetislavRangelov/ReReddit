@@ -10,8 +10,13 @@ public class CommentConverter {
     }
 
     public static Comment convert(CommentEntity entity){
-        var converted = new Comment();
-        BeanUtils.copyProperties(entity, converted);
-        return converted;
+        return Comment.builder()
+                .createdAt(entity.getCreatedAt())
+                .id(entity.getId())
+                .ups(entity.getUps())
+                .downs(entity.getDowns())
+                .author(UserConverter.convert(entity.getAuthor()))
+                .body(entity.getBody())
+                .build();
     }
 }

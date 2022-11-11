@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sem3.its.ReReddit.domain.Comment;
 import sem3.its.ReReddit.persistence.entity.CommentEntity;
+import sem3.its.ReReddit.persistence.entity.UserEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,13 +17,11 @@ public class CommentConverterTest {
                 .ups(3)
                 .downs(6)
                 .body("whatever")
-                .author(null)
-                .parent(null)
+                .author(UserEntity.builder().id(1L).build())
                 .build();
 
         Comment converted = CommentConverter.convert(commentEntity);
 
         assertEquals(commentEntity.getId(), converted.getId());
-        assertEquals(commentEntity.getAuthor(), converted.getAuthor());
     }
 }

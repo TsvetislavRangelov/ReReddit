@@ -33,7 +33,6 @@ public class GetCommentsUseCaseImpl implements GetCommentsUseCase {
                 .map(CommentConverter::convert)
                 .collect(Collectors.toList());
         res.setComments(comments);
-        System.out.println(res);
         return res;
     }
 }

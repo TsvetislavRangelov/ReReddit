@@ -11,6 +11,9 @@ import sem3.its.ReReddit.domain.Enums.Role;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 import sem3.its.ReReddit.business.security.PasswordHasher;
+import sem3.its.ReReddit.persistence.entity.UserRoleEntity;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -45,8 +48,13 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                         .username(request.getUsername())
                         .password(hash)
                         .email(request.getEmail())
-                        .role(Role.STANDARD)
                         .build();
+                userEntity.setUserRoles(Set.of(
+                        UserRoleEntity.builder()
+                                .user(userEntity)
+                                .role(Role.STANDARD)
+                                .build()
+                ));
                 return userRepository.save(userEntity);
         }
     }

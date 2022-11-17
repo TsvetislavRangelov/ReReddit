@@ -13,7 +13,7 @@ import javax.validation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
@@ -29,8 +29,8 @@ public class UserController {
     GetUsersResponse res = getUsersUseCase.getUsers();
     return ResponseEntity.ok(res);
     }
-    @GetMapping("{id}")
-    public ResponseEntity<User> getUser(@PathVariable(value = "id") final long id){
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(@RequestParam(value = "id", required = true) long id){
         final Optional<User> userOptional = getUserUseCase.getUser(id);
         if(userOptional.isEmpty()){
             return ResponseEntity.notFound().build();

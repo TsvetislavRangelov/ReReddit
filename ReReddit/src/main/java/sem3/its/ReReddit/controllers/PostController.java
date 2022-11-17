@@ -17,7 +17,7 @@ import sem3.its.ReReddit.domain.Post;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {

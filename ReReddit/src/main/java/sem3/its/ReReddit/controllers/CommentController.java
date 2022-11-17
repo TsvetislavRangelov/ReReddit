@@ -12,7 +12,7 @@ import sem3.its.ReReddit.domain.GetCommentsRequest;
 import sem3.its.ReReddit.domain.GetCommentsResponse;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RequestMapping("/comments")
 @AllArgsConstructor
 public class CommentController {

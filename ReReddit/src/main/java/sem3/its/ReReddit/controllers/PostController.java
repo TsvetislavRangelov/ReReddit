@@ -7,12 +7,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sem3.its.ReReddit.business.services.CreatePostUseCase;
 import sem3.its.ReReddit.business.services.GetPostUseCase;
+import sem3.its.ReReddit.business.services.GetPostsByUserIdUseCase;
 import sem3.its.ReReddit.business.services.GetPostsUseCase;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
-import sem3.its.ReReddit.domain.CreatePostRequest;
-import sem3.its.ReReddit.domain.CreatePostResponse;
-import sem3.its.ReReddit.domain.GetPostsResponse;
-import sem3.its.ReReddit.domain.Post;
+import sem3.its.ReReddit.domain.*;
 
 import java.util.Optional;
 
@@ -24,6 +22,7 @@ public class PostController {
     private final GetPostsUseCase getPostsUseCase;
     private final CreatePostUseCase createPostUseCase;
     private final GetPostUseCase getPostUseCase;
+    private final GetPostsByUserIdUseCase getPostsByUserIdUseCase;
 
     @GetMapping
     public ResponseEntity<GetPostsResponse> getPosts(){
@@ -44,5 +43,11 @@ public class PostController {
     public ResponseEntity<CreatePostResponse> createPost(@RequestBody @Validated CreatePostRequest request){
         CreatePostResponse res = createPostUseCase.createPost(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<GetPostsByUserIdResponse> getPostsByUserId(@RequestParam(value = "user", required=true) long userId){
+        GetPostsByUserIdResponse res = getPostsByUserIdUseCase.getPostsByUserId(userId);
+        return ResponseEntity.ok(res);
     }
 }

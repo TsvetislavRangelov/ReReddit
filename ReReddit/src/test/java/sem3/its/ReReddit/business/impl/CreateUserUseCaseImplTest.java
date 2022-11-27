@@ -12,8 +12,10 @@ import sem3.its.ReReddit.domain.CreateUserResponse;
 import sem3.its.ReReddit.domain.Enums.Role;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
+import sem3.its.ReReddit.persistence.entity.UserRoleEntity;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -29,10 +31,15 @@ import static org.mockito.Mockito.*;
 
     @Test
     void createUser_ShouldReturnIdOfCreatedUser(){
-        UserEntity user = UserEntity.builder().username("u1").password("123").role(Role.STANDARD).build();
+        UserEntity user = UserEntity.builder()
+                .username("u1")
+                .password("123")
+                .userRoles(Set.of(UserRoleEntity.builder().role(Role.valueOf("STANDARD")).build())).build();
 
-        when(userRepositoryMock.save(Mockito.any(UserEntity.class)))
+        when(userRepositoryMock.save(user))
                 .thenReturn(user);
+        when(passwordHasher.hash(user.getPassword()))
+                .thenReturn("123");
 
         CreateUserResponse actual = createUserUseCase.createUser(CreateUserRequest.builder().username("u1").password("123").build());
 
@@ -41,6 +48,6 @@ import static org.mockito.Mockito.*;
 
         assertEquals(expected.getId(),actual.getId());
 
-        verify(userRepositoryMock).save(Mockito.any(UserEntity.class));
+        verify(userRepositoryMock).save(user);
     }
 }

@@ -27,14 +27,14 @@ import static org.mockito.Mockito.when;
 
     @Test
     void getUser_ShouldReturnUserConverted(){
-        UserEntity userEntity = UserEntity.builder().id(1L).username("user1").build();
+        UserEntity userEntity = UserEntity.builder().id(1L).build();
 
         when(userRepositoryMock.findById(1L))
                 .thenReturn(Optional.ofNullable(userEntity));
         Optional<User> actual = getUserUseCase.getUser(1);
 
 
-        User expected = User.builder().id(1L).username("user1").build();
+        User expected = User.builder().id(1L).build();
 
         assert actual.orElse(null) != null;
         assertEquals(expected.getId(), actual.orElse(null).getId());

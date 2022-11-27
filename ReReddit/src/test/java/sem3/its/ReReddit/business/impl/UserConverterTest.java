@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class UserConverterTest {
     @Test
     void convertUser_ShouldReturnUserConverted(){
-        UserEntity userEntity = UserEntity.builder().role(Role.STANDARD).id(1L).username("whatever").
+        UserEntity userEntity = UserEntity.builder().id(1L).username("whatever").
                 email("somemail@gmail.com").build();
 
         User converted = UserConverter.convert(userEntity);

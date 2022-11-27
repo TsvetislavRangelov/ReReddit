@@ -39,7 +39,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
     private UserEntity saveNewUser(CreateUserRequest request){
         String pwd = request.getPassword();
-        if(pwd.length() == 0){
+        if(pwd.length() == 0 ){
             throw new InvalidRequestBodyException();
         }
             String hash = passwordHasher.hash(pwd);

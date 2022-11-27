@@ -7,7 +7,9 @@ import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
 import sem3.its.ReReddit.business.security.PasswordVerifier;
 import sem3.its.ReReddit.business.services.AccessTokenEncoder;
 import sem3.its.ReReddit.business.services.LoginUseCase;
+import sem3.its.ReReddit.business.services.RefreshTokenService;
 import sem3.its.ReReddit.domain.*;
+import sem3.its.ReReddit.persistence.RefreshTokenRepository;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
@@ -22,6 +24,8 @@ public class LoginUseCaseImpl implements LoginUseCase {
     private AccessTokenEncoder encoder;
     private UserRepository userRepository;
     private PasswordVerifier passwordVerifier;
+    private RefreshTokenRepository refreshTokenRepository;
+    private RefreshTokenService refreshTokenService;
 
     public LoginResponse login(LoginRequest request){
         char[] pwd = request.getPassword().toCharArray();
@@ -31,13 +35,25 @@ public class LoginUseCaseImpl implements LoginUseCase {
             throw new ResourceDoesNotExistException();
         }
 
-        if(!passwordVerifier.verify(userOptional.get().getPassword(), pwd)){
-          throw new InvalidCredentialsException();
+        if(!passwordVerifier.verify(userOptional.get().getPassword(), pwd)) {
+            throw new InvalidCredentialsException();
         }
         UserEntity user = userOptional.get();
-        String token = generateAccessToken(user);
+        refreshTokenRepository.deleteByUser(user);
+        String accessToken = generateAccessToken(user);
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+        List<String> roles = user.getUserRoles()
+                .stream()
+                .map(r -> r.getRole()
+                        .toString())
+                .toList();
         return LoginResponse.builder()
-                .token(token)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken.getToken())
+                .username(user.getUsername())
+                .id(user.getId())
+                .roles(roles)
                 .build();
 
     }

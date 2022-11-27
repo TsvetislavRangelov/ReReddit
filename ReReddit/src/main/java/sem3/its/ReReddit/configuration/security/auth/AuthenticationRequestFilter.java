@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import sem3.its.ReReddit.business.exception.InvalidAccessTokenException;
 import sem3.its.ReReddit.business.services.AccessTokenDecoder;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+@Component
 public class AuthenticationRequestFilter extends OncePerRequestFilter {
     private static final String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";
 
@@ -27,6 +29,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException{
+        System.out.println(request.getQueryString());
         final String requestTokenHeader = request.getHeader("Authorization");
         if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
@@ -36,6 +39,7 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
         String accessToken = requestTokenHeader.substring(7);
 
         try {
+
             AccessToken accessTokenDTO = accessTokenDecoder.decode(accessToken);
             setupSpringSecurityContext(accessTokenDTO);
             chain.doFilter(request, response);
@@ -46,7 +50,9 @@ public class AuthenticationRequestFilter extends OncePerRequestFilter {
 
     }
     private void sendAuthenticationError(HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.addHeader("Access-Control-Allow-Origin","http://localhost:3000");
+        response.addHeader("Access-Control-Allow-Credentials","true");
         response.flushBuffer();
     }
 

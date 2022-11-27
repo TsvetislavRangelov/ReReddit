@@ -30,8 +30,6 @@ public class UserEntity {
     @NotBlank
     @Column(name = "password")
     private String password;
-    @Column(name = "role")
-    private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

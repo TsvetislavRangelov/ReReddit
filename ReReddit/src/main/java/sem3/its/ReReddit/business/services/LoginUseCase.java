@@ -4,5 +4,5 @@ import sem3.its.ReReddit.domain.LoginRequest;
 import sem3.its.ReReddit.domain.LoginResponse;
 
 public interface LoginUseCase {
-    public LoginResponse login(LoginRequest request);
+    LoginResponse login(LoginRequest request);
 }

@@ -1,17 +1,34 @@
 package sem3.its.ReReddit.persistence.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import sem3.its.ReReddit.domain.Post;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "comment")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class CommentEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @OneToOne
     private UserEntity author;
+    @Column
     private String body;
-    private Post post;
+    @ManyToOne
+    private PostEntity post;
+    @Column
     private int ups;
+    @Column
     private int downs;
-    private CommentEntity parent;
+    @Column
+    private LocalDateTime createdAt;
 }

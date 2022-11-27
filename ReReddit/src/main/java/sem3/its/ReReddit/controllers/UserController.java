@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sem3.its.ReReddit.business.services.*;
+import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
 import javax.validation.*;
@@ -12,7 +13,7 @@ import javax.validation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", allowCredentials = "true")
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
@@ -28,8 +29,8 @@ public class UserController {
     GetUsersResponse res = getUsersUseCase.getUsers();
     return ResponseEntity.ok(res);
     }
-    @GetMapping("{id}")
-    public ResponseEntity<User> getUser(@PathVariable(value = "id") final long id){
+    @GetMapping("/user")
+    public ResponseEntity<User> getUser(@RequestParam(value = "id", required = true) long id){
         final Optional<User> userOptional = getUserUseCase.getUser(id);
         if(userOptional.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -43,12 +44,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
+    @IsAuthenticated
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         deleteUserUseCase.deleteUser((id));
         return ResponseEntity.noContent().build();
     }
 
+    @IsAuthenticated
     @PatchMapping("{id}")
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody @Valid UpdateUserRequest request){
         request.setId(id);

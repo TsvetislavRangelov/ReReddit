@@ -36,6 +36,9 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql:9.3.0'
 	implementation 'de.mkammerer:argon2-jvm:2.11'
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	implementation 'net.logstash.logback:logstash-logback-encoder:7.1.1'
+	implementation 'ch.qos.logback:logback-classic:1.2.11'
+
 }
 jacocoTestReport {
 	dependsOn test

@@ -8,6 +8,7 @@ import sem3.its.ReReddit.business.services.*;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.*;
 
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class UserController {
     }
 
     @IsAuthenticated
+    @RolesAllowed("ROLE_ADMIN")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         deleteUserUseCase.deleteUser((id));
@@ -52,6 +54,7 @@ public class UserController {
     }
 
     @IsAuthenticated
+    @RolesAllowed({"ROLE_STANDARD", "ROLE_ADMIN"})
     @PatchMapping("{id}")
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody @Valid UpdateUserRequest request){
         request.setId(id);

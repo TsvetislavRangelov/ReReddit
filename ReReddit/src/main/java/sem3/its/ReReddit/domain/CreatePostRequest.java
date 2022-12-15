@@ -11,7 +11,7 @@ import sem3.its.ReReddit.persistence.entity.UserEntity;
 @Data
 @Builder
 public class CreatePostRequest {
-    private UserEntity author;
+    private long authorId;
     private String header;
     private String body;
 

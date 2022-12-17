@@ -26,8 +26,9 @@ public class PostController {
     private final GetPostsByUserIdUseCase getPostsByUserIdUseCase;
 
     @GetMapping
-    public ResponseEntity<GetPostsResponse> getPosts(){
-        GetPostsResponse res = getPostsUseCase.getPosts();
+    public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size){
+        GetPostsResponse res = getPostsUseCase.getPosts(page, size);
         return ResponseEntity.ok(res);
     }
 

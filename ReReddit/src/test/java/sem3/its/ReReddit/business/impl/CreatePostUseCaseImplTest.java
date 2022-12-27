@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
         when(postRepositoryMock.save(postEntity))
                 .thenReturn(postEntity);
 
-        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().author(author).build());
+        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().authorId(author.getId()).build());
 
         CreatePostResponse expected = CreatePostResponse.builder().id(actual.getId()).build();
 

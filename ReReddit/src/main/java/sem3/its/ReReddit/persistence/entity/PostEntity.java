@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "post")
@@ -35,7 +36,8 @@ public class PostEntity {
     private int downs;
     @Column(name = "comments")
     private int comments;
-    @Column(name = "createdAt")
-    private LocalDateTime createdAt;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_at")
+    private Date createdAt;
 
 }

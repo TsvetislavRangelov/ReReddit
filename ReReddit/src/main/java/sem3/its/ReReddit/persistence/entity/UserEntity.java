@@ -36,6 +36,6 @@ public class UserEntity {
     @JoinColumn(name = "user_id")
     private Set<UserRoleEntity> userRoles;
 
-    @Column(name = "registeredAt")
+    @Column(name = "registered_at")
     private LocalDateTime registeredAt;
 }

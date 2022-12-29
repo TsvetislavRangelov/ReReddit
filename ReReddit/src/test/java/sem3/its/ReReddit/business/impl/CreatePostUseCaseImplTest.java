@@ -12,6 +12,8 @@ import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,12 +31,17 @@ import static org.mockito.Mockito.when;
     void createPost_ShouldReturnIdOfCreatedPost(){
         UserEntity author = UserEntity.builder().id(3L).build();
         PostEntity postEntity = PostEntity.builder().author(author).build();
-        when(userRepositoryMock.existsById(3L))
-                .thenReturn(true);
+
+        when(userRepositoryMock.save(author))
+                .thenReturn(author);
+        when(userRepositoryMock.findById(3L))
+                .thenReturn(Optional.of(author));
         when(postRepositoryMock.save(postEntity))
                 .thenReturn(postEntity);
 
-        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().authorId(author.getId()).build());
+        userRepositoryMock.save(author);
+
+        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().authorId(3).build());
 
         CreatePostResponse expected = CreatePostResponse.builder().id(actual.getId()).build();
 

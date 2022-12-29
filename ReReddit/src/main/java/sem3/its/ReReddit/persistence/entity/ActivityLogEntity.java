@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "activity_log")
@@ -21,7 +22,8 @@ public class ActivityLogEntity {
     private Long id;
 
     @Column
-    private LocalDateTime timestamp;
+    @Temporal(TemporalType.DATE)
+    private Date timestamp;
 
     @JoinTable(name = "user", joinColumns = @JoinColumn(name = "profile", referencedColumnName = "username"))
     private String profile;

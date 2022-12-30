@@ -4,6 +4,8 @@ package sem3.its.ReReddit.business.impl;
 import sem3.its.ReReddit.domain.User;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.sql.Date;
+
 
 public class UserConverter {
     private UserConverter(){

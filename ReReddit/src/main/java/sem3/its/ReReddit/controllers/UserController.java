@@ -8,8 +8,10 @@ import sem3.its.ReReddit.business.services.*;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.*;
 
+import java.text.ParseException;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +24,9 @@ public class UserController {
     private final CreateUserUseCase createUserUseCase;
     private final DeleteUserUseCase deleteUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;
+    private final CountNewUsersForDayUseCase countNewUsersForDayUseCase;
+
+    private final GetTotalUserCountUseCase getTotalUserCountUseCase;
 
 
     @GetMapping
@@ -45,6 +50,7 @@ public class UserController {
     }
 
     @IsAuthenticated
+    @RolesAllowed("ROLE_ADMIN")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable long id){
         deleteUserUseCase.deleteUser((id));
@@ -52,11 +58,26 @@ public class UserController {
     }
 
     @IsAuthenticated
+    @RolesAllowed({"ROLE_STANDARD", "ROLE_ADMIN"})
     @PatchMapping("{id}")
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody @Valid UpdateUserRequest request){
         request.setId(id);
         updateUserUseCase.updateUser(request);
         return ResponseEntity.noContent().build();
 
+    }
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN"})
+    @GetMapping("/count")
+    public ResponseEntity<Long> getNewUsersForDay(@RequestParam String date) throws ParseException{
+        long res = countNewUsersForDayUseCase.getNewUsersForDay(date);
+        return ResponseEntity.ok().body(res);
+    }
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN"})
+    @GetMapping("/count/total")
+    public ResponseEntity<Long> getTotalUserCount(){
+        long res = getTotalUserCountUseCase.getTotalUserCount();
+        return ResponseEntity.ok().body(res);
     }
 }

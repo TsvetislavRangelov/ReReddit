@@ -9,7 +9,7 @@ import sem3.its.ReReddit.persistence.entity.UserEntity;
 @Data
 @Builder
 public class CreateCommentRequest {
-   private UserEntity author;
+   private long authorId;
    private String body;
-   private PostEntity post;
+   private long postId;
 }

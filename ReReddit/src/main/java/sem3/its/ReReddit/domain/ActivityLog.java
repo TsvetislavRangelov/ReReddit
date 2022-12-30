@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetPostsResponse {
-    private Map<String, Object> data;
+public class ActivityLog {
+    private Long id;
+    private Date timestamp;
+    private String profile;
+    private boolean success;
 }

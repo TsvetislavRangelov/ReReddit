@@ -2,9 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import sem3.its.ReReddit.business.exception.CommentCreationException;
-import sem3.its.ReReddit.business.exception.InvalidCredentialsException;
-import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;
+import sem3.its.ReReddit.business.exception.*;
 import sem3.its.ReReddit.business.services.CreateCommentUseCase;
 import sem3.its.ReReddit.domain.CreateCommentRequest;
 import sem3.its.ReReddit.domain.CreateCommentResponse;
@@ -34,15 +32,17 @@ public class CreateCommentUseCaseImpl implements CreateCommentUseCase {
     }
 
     private CommentEntity saveNewComment(CreateCommentRequest request) throws InvalidRequestBodyException{
-       if(!userRepository.existsById(request.getAuthor().getId()) &&
-               !postRepository.existsById(request.getPost().getId())){
+       if(!userRepository.existsById(request.getAuthorId()) &&
+               !postRepository.existsById(request.getPostId())){
           throw new InvalidRequestBodyException();
        }
         CommentEntity commentEntity = CommentEntity.builder()
                 .ups(0)
                 .downs(0)
-                .author(request.getAuthor())
-                .post(request.getPost())
+                .author(userRepository.findById(request.getAuthorId())
+                        .orElseThrow(ResourceDoesNotExistException::new))
+                .post(postRepository.findById(request.getPostId())
+                        .orElseThrow(ResourceDoesNotExistException::new))
                 .body(request.getBody())
                 .createdAt(LocalDateTime.now())
                 .build();

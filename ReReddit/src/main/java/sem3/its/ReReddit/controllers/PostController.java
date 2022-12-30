@@ -12,6 +12,7 @@ import sem3.its.ReReddit.business.services.GetPostsUseCase;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Optional;
 
 @RestController
@@ -25,8 +26,9 @@ public class PostController {
     private final GetPostsByUserIdUseCase getPostsByUserIdUseCase;
 
     @GetMapping
-    public ResponseEntity<GetPostsResponse> getPosts(){
-        GetPostsResponse res = getPostsUseCase.getPosts();
+    public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "10") int size){
+        GetPostsResponse res = getPostsUseCase.getPosts(page, size);
         return ResponseEntity.ok(res);
     }
 
@@ -39,13 +41,18 @@ public class PostController {
         return ResponseEntity.ok().body(postOptional.get());
     }
 
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_STANDARD", "ROLE_ADMIN"})
     @PostMapping
     public ResponseEntity<CreatePostResponse> createPost(@RequestBody @Validated CreatePostRequest request){
         CreatePostResponse res = createPostUseCase.createPost(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
+
     @GetMapping("/user")
+    @RolesAllowed({"ROLE_STANDARD", "ROLE_ADMIN"})
+    @IsAuthenticated
     public ResponseEntity<GetPostsByUserIdResponse> getPostsByUserId(@RequestParam(value = "user", required=true) long userId){
         GetPostsByUserIdResponse res = getPostsByUserIdUseCase.getPostsByUserId(userId);
         return ResponseEntity.ok(res);

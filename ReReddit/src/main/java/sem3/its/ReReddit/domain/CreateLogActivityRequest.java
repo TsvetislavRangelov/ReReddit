@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Map;
-
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class GetPostsResponse {
-    private Map<String, Object> data;
+@AllArgsConstructor
+public class CreateLogActivityRequest {
+    private String profile;
+    private boolean success;
 }

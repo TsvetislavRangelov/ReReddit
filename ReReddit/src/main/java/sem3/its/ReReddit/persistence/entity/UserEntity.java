@@ -8,6 +8,8 @@ import sem3.its.ReReddit.domain.Enums.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -34,4 +36,8 @@ public class UserEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private Set<UserRoleEntity> userRoles;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "registered_at")
+    private Date registeredAt;
 }

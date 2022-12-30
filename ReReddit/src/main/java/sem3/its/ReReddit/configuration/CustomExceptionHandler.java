@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Generated
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String HASHMAP_MESSAGE = "message";

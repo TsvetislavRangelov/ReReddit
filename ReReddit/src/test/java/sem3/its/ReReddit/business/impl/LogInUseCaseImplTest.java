@@ -26,6 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,9 +36,9 @@ public class LogInUseCaseImplTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private PasswordVerifier passwordVerifier;
-    @Mock
     private RefreshTokenRepository refreshTokenRepository;
+    @Mock
+    private PasswordVerifier passwordVerifier;
     @Mock
     private RefreshTokenService refreshTokenService;
 
@@ -73,5 +74,13 @@ public class LogInUseCaseImplTest {
                 .roles(List.of("STANDARD"))
                 .username("new").build();
         assertEquals(actual, expected);
+
+        verify(userRepository).findByEmail("new@gmail.com");
+        verify(passwordVerifier).verify("12345", "12345".toCharArray());
+        verify(encoder).encode(AccessToken.builder()
+                .userId(1L)
+                .roles(List.of("STANDARD"))
+                .subject("new").build());
+        verify(refreshTokenService).createRefreshToken(1L);
     }
 }

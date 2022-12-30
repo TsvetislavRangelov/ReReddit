@@ -8,8 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.WebApplicationContext;
+import sem3.its.ReReddit.configuration.Generated;
 import sem3.its.ReReddit.domain.AccessToken;
 
+@Generated
 @Configuration
 public class RequestAuthenticatedUserProvider {
 

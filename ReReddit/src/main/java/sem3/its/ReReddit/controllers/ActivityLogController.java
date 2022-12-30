@@ -31,8 +31,8 @@ public class ActivityLogController {
         return ResponseEntity.ok(res);
     }
 
-//    @IsAuthenticated
-//    @RolesAllowed("ROLE_ADMIN")
+    @IsAuthenticated
+    @RolesAllowed("ROLE_ADMIN")
     @GetMapping("/count")
     public ResponseEntity<CountLogActivityForDateResponse> countLogActivityForDate(@RequestParam String date) throws ParseException {
         CountLogActivityForDateResponse res = countLogActivityForDateUseCase.countLogActivityForDate(date);

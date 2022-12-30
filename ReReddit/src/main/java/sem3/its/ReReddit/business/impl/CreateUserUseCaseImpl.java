@@ -13,6 +13,8 @@ import sem3.its.ReReddit.persistence.entity.UserEntity;
 import sem3.its.ReReddit.business.security.PasswordHasher;
 import sem3.its.ReReddit.persistence.entity.UserRoleEntity;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Set;
 
 @Service
@@ -47,6 +49,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 UserEntity userEntity = UserEntity.builder()
                         .username(request.getUsername())
                         .password(hash)
+                        .registeredAt(Date.from(Instant.now()))
                         .email(request.getEmail())
                         .build();
                 userEntity.setUserRoles(Set.of(

@@ -2,6 +2,7 @@ package sem3.its.ReReddit.business.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sem3.its.ReReddit.business.exception.InvalidUserException;
 import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
 import sem3.its.ReReddit.business.services.CreatePostUseCase;
 import sem3.its.ReReddit.business.exception.PostHasNoAuthorException;
@@ -31,11 +32,14 @@ public class CreatePostUseCaseImpl implements CreatePostUseCase {
 
     private PostEntity saveNewPost(CreatePostRequest request){
         if(!userRepository.existsById(request.getAuthorId())){
-            throw new PostHasNoAuthorException();
+            throw new InvalidUserException("INVALID_AUTHOR_ID");
         }
         Optional<UserEntity> userOptional = userRepository.findById(request.getAuthorId());
+        if(userOptional.isEmpty()){
+            throw new PostHasNoAuthorException();
+        }
         PostEntity postEntity = PostEntity.builder()
-                .author(userOptional.orElseThrow(ResourceDoesNotExistException::new))
+                .author(userOptional.get())
                 .body(request.getBody())
                 .header(request.getHeader())
                 .build();

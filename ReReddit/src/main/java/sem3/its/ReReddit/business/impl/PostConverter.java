@@ -22,22 +22,4 @@ public class PostConverter {
                 .author(UserConverter.convert(entity.getAuthor()))
                 .build();
     }
-    public static  List<Post> convertList(List<PostEntity> list){
-        if(list == null){
-            return Collections.emptyList();
-        }
-        List<Post> convertedPosts = new ArrayList<>();
-        for(PostEntity p : list) {
-            convertedPosts.add(Post.builder()
-                    .id(p.getId())
-                    .author(UserConverter.convert(p.getAuthor()))
-                    .body(p.getBody())
-                    .ups(p.getUps())
-                    .downs(p.getDowns())
-                    .header(p.getHeader())
-                    .comments(p.getComments())
-                    .build());
-        }
-        return convertedPosts;
-    }
 }

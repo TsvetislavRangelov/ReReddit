@@ -28,7 +28,7 @@ public class PostController {
     @GetMapping
     public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
                                                      @RequestParam(defaultValue = "10") int size){
-        GetPostsResponse res = getPostsUseCase.getPosts(page, size);
+        GetPostsResponse res = getPostsUseCase.getPosts();
         return ResponseEntity.ok(res);
     }
 

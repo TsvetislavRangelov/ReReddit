@@ -7,6 +7,7 @@ import sem3.its.ReReddit.persistence.UserRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
@@ -19,8 +20,8 @@ public class CountNewUsersForDayUseCaseImpl implements CountNewUsersForDayUseCas
 
     @Override
     public long getNewUsersForDay(String date) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date actualDate = formatter.parse(date);
-        return userRepository.countAllByRegisteredAt(actualDate);
+
+
+        return userRepository.countAllByRegisteredAt(LocalDate.parse(date));
     }
 }

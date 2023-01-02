@@ -30,29 +30,26 @@ import static org.mockito.Mockito.when;
    @InjectMocks
     private GetPostsUseCaseImpl getPostsUseCase;
 
-   @Test
-    void getPosts_ShouldReturnPostsConverted(){
-//       PostEntity post1Entity = PostEntity.builder().id(1L).author(
-//                UserEntity.builder().id(1L).username("user1").build()
-//       ).build();
-//       PostEntity post2Entity = PostEntity.builder().id(2L).author(
-//               UserEntity.builder().id(2L).username("user2").build()
-//       ).build();
-//       Page<PostEntity> posts = Mockito.mock(Page.class);
-//
-//       when(postRepositoryMock.findAll(PageRequest.of(0, 10)))
-//               .thenReturn(posts);
-//       GetPostsResponse actual = getPostsUseCase.getPosts(0, 10);
-//
-//       Post post1 = Post.builder().id(1L).author(User.builder().id(1L).username("user1").build()).build();
-//       Post post2 = Post.builder().id(2L).author(User.builder().id(2L).username("user2").build()).build();
-//
-//       GetPostsResponse expected = GetPostsResponse.builder().data(Map.of("posts", List.of(post1, post2))).build();
-//
-//       assertEquals(expected.getData().get("posts"), actual.getData().get("posts"));
-//
-//       verify(postRepositoryMock).findAll();
+    @Test
+    void getPosts_ShouldReturnPostsConverted() {
+        PostEntity post1Entity = PostEntity.builder().id(1L).author(
+                UserEntity.builder().id(1L).username("user1").build()
+        ).build();
+        PostEntity post2Entity = PostEntity.builder().id(2L).author(
+                UserEntity.builder().id(2L).username("user2").build()
+        ).build();
 
+        when(postRepositoryMock.findAll())
+                .thenReturn(List.of(post1Entity, post2Entity));
+        GetPostsResponse actual = getPostsUseCase.getPosts();
 
-   }
+        Post post1 = Post.builder().id(1L).author(User.builder().id(1L).username("user1").build()).build();
+        Post post2 = Post.builder().id(2L).author(User.builder().id(2L).username("user2").build()).build();
+
+        GetPostsResponse expected = GetPostsResponse.builder().posts(List.of(post1, post2)).build();
+
+        assertEquals(expected, actual);
+
+        verify(postRepositoryMock).findAll();
+    }
 }

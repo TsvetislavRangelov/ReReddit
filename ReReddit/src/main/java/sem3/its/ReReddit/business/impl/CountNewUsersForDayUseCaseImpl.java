@@ -19,7 +19,7 @@ public class CountNewUsersForDayUseCaseImpl implements CountNewUsersForDayUseCas
 
 
     @Override
-    public long getNewUsersForDay(String date) throws ParseException {
+    public long getNewUsersForDay(String date) {
 
 
         return userRepository.countAllByRegisteredAt(LocalDate.parse(date));

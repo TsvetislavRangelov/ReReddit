@@ -25,7 +25,7 @@ public class GetPostsUseCaseImpl implements GetPostsUseCase {
         @Override
         public GetPostsResponse getPosts(){
             List<PostEntity> results;
-            results = postRepository.findAll();
+            results = postRepository.findAllByOrderByIdDesc();
 
             final GetPostsResponse res = new GetPostsResponse();
             List<Post> posts = results

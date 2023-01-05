@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import sem3.its.ReReddit.business.services.CreatePostUseCase;
-import sem3.its.ReReddit.business.services.GetPostUseCase;
-import sem3.its.ReReddit.business.services.GetPostsByUserIdUseCase;
-import sem3.its.ReReddit.business.services.GetPostsUseCase;
+import sem3.its.ReReddit.business.services.*;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
@@ -24,6 +21,8 @@ public class PostController {
     private final CreatePostUseCase createPostUseCase;
     private final GetPostUseCase getPostUseCase;
     private final GetPostsByUserIdUseCase getPostsByUserIdUseCase;
+    private final CountPostsForDateUseCase countPostsForDateUseCase;
+    private final CountTotalPostsUseCase countTotalPostsUseCase;
 
     @GetMapping
     public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
@@ -55,6 +54,24 @@ public class PostController {
     @IsAuthenticated
     public ResponseEntity<GetPostsByUserIdResponse> getPostsByUserId(@RequestParam(value = "user", required=true) long userId){
         GetPostsByUserIdResponse res = getPostsByUserIdUseCase.getPostsByUserId(userId);
+        return ResponseEntity.ok(res);
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN"})
+    @GetMapping("/count")
+    public ResponseEntity<Long> countPostsForDate(@RequestParam String date){
+        long res = countPostsForDateUseCase.getPostCount(date);
+
+        return ResponseEntity.ok(res);
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN"})
+    @GetMapping("/total")
+    public ResponseEntity<Long> countTotalPosts(){
+        long res = countTotalPostsUseCase.countTotalPosts();
+
         return ResponseEntity.ok(res);
     }
 }

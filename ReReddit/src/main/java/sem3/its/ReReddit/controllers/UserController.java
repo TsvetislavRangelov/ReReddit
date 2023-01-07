@@ -28,6 +28,7 @@ public class UserController {
 
     private final GetTotalUserCountUseCase getTotalUserCountUseCase;
     private final UpdatePasswordUseCase updatePasswordUseCase;
+    private final GetPasswordForUserUseCase getPasswordForUserUseCase;
 
 
     @GetMapping
@@ -82,10 +83,18 @@ public class UserController {
         return ResponseEntity.ok().body(res);
     }
     @IsAuthenticated
-    @RolesAllowed({"ROLE_ADMIN, ROLE_STANDARD"})
-    @PutMapping("/update-pass")
-    public ResponseEntity<Void> updatePassword(@RequestBody @Valid UpdatePasswordRequest request){
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
+    @PatchMapping("/update-pass/{id}")
+    public ResponseEntity<Void> updatePassword(@PathVariable long id, @RequestBody @Valid UpdatePasswordRequest request){
+        request.setUserId(id);
         updatePasswordUseCase.updatePassword(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.noContent().build();
+    }
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
+    @GetMapping("/pass")
+    public ResponseEntity<String> getPasswordForUser(@RequestParam(value = "id") long id){
+        String res = getPasswordForUserUseCase.getPassword(id);
+        return ResponseEntity.ok(res);
     }
 }

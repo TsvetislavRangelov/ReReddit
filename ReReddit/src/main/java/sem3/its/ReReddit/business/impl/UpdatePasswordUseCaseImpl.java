@@ -25,9 +25,6 @@ public class UpdatePasswordUseCaseImpl implements UpdatePasswordUseCase {
         if(user.isEmpty()){
             throw new ResourceDoesNotExistException();
         }
-        if(!passwordVerifier.verify(user.get().getPassword(), request.getOldPassword().toCharArray())){
-            throw new InvalidCredentialsException();
-        }
 
         String newHash = passwordHasher.hash(request.getNewPassword());
         user.get().setPassword(newHash);

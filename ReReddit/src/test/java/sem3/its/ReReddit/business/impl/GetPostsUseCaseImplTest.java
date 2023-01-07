@@ -32,24 +32,19 @@ import static org.mockito.Mockito.when;
 
     @Test
     void getPosts_ShouldReturnPostsConverted() {
-        PostEntity post1Entity = PostEntity.builder().id(1L).author(
-                UserEntity.builder().id(1L).username("user1").build()
-        ).build();
-        PostEntity post2Entity = PostEntity.builder().id(2L).author(
-                UserEntity.builder().id(2L).username("user2").build()
-        ).build();
+       UserEntity author =  UserEntity.builder().id(1L).username("user1").build();
+        PostEntity post1Entity = PostEntity.builder().id(1L).author(author).build();
+        PostEntity post2Entity = PostEntity.builder().id(2L).author(author).build();
 
-        when(postRepositoryMock.findAll())
+        when(postRepositoryMock.findAllByOrderByIdDesc())
                 .thenReturn(List.of(post1Entity, post2Entity));
         GetPostsResponse actual = getPostsUseCase.getPosts();
 
-        Post post1 = Post.builder().id(1L).author(User.builder().id(1L).username("user1").build()).build();
-        Post post2 = Post.builder().id(2L).author(User.builder().id(2L).username("user2").build()).build();
-
-        GetPostsResponse expected = GetPostsResponse.builder().posts(List.of(post1, post2)).build();
+        GetPostsResponse expected = GetPostsResponse.builder().posts(List.of(PostConverter.convert(post1Entity),
+                PostConverter.convert(post2Entity))).build();
 
         assertEquals(expected, actual);
 
-        verify(postRepositoryMock).findAll();
+        verify(postRepositoryMock).findAllByOrderByIdDesc();
     }
 }

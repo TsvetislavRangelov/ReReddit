@@ -28,7 +28,7 @@ public class UserController {
 
     private final GetTotalUserCountUseCase getTotalUserCountUseCase;
     private final UpdatePasswordUseCase updatePasswordUseCase;
-    private final GetPasswordForUserUseCase getPasswordForUserUseCase;
+    private final ValidatePasswordForChangeUseCase validatePasswordForChangeUseCase;
 
 
     @GetMapping
@@ -92,9 +92,9 @@ public class UserController {
     }
     @IsAuthenticated
     @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
-    @GetMapping("/pass")
-    public ResponseEntity<String> getPasswordForUser(@RequestParam(value = "id") long id){
-        String res = getPasswordForUserUseCase.getPassword(id);
+    @PostMapping("/pass")
+    public ResponseEntity<Boolean> verifyPassword(@RequestBody @Valid ValidatePasswordForChangeRequest request){
+        boolean res = validatePasswordForChangeUseCase.validate(request);
         return ResponseEntity.ok(res);
     }
 }

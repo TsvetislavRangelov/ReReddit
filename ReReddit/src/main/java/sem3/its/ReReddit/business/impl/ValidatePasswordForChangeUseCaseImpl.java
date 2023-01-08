@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import sem3.its.ReReddit.business.exception.InvalidCredentialsException;
 import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
-import sem3.its.ReReddit.business.security.PasswordHasher;
 import sem3.its.ReReddit.business.security.PasswordVerifier;
-import sem3.its.ReReddit.business.services.UpdatePasswordUseCase;
-import sem3.its.ReReddit.domain.UpdatePasswordRequest;
+import sem3.its.ReReddit.business.services.ValidatePasswordForChangeUseCase;
+import sem3.its.ReReddit.domain.ValidatePasswordForChangeRequest;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
@@ -15,20 +14,21 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class UpdatePasswordUseCaseImpl implements UpdatePasswordUseCase {
+public class ValidatePasswordForChangeUseCaseImpl implements ValidatePasswordForChangeUseCase {
+    private PasswordVerifier passwordVerifier;
     private UserRepository userRepository;
-    private PasswordHasher passwordHasher;
+
+
+
     @Override
-    public void updatePassword(UpdatePasswordRequest request) {
+    public boolean validate(ValidatePasswordForChangeRequest request) {
         Optional<UserEntity> user = userRepository.findById(request.getUserId());
         if(user.isEmpty()){
             throw new ResourceDoesNotExistException();
         }
-
-        String newHash = passwordHasher.hash(request.getNewPassword());
-        user.get().setPassword(newHash);
-        System.out.println(user.get().getPassword());
-        userRepository.save(user.get());
-
+        if(!passwordVerifier.verify(user.get().getPassword(), request.getOldPassword().toCharArray())){
+            throw new InvalidCredentialsException();
+        }
+        return true;
     }
 }

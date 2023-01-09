@@ -56,7 +56,7 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
                 userEntity.setUserRoles(Set.of(
                         UserRoleEntity.builder()
                                 .user(userEntity)
-                                .role(Role.ADMIN)
+                                .role(Role.STANDARD)
                                 .build()
                 ));
                 return userRepository.save(userEntity);

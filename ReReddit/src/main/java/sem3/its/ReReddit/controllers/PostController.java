@@ -25,6 +25,8 @@ public class PostController {
     private final CountPostsForDateUseCase countPostsForDateUseCase;
     private final CountTotalPostsUseCase countTotalPostsUseCase;
     private final UpvotePostUseCase upvotePostUseCase;
+    private final DownVotePostUseCase downVotePostUseCase;
+    private final GetPreviousVoteUseCase getPreviousVoteUseCase;
 
     @GetMapping
     public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
@@ -83,5 +85,20 @@ public class PostController {
     public ResponseEntity<Void> upvotePost(@RequestBody @Valid UpvotePostRequest request){
         upvotePostUseCase.upvote(request);
         return ResponseEntity.noContent().build();
+    }
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
+    @PatchMapping("/downvote")
+    public ResponseEntity<Void> downvotePost(@RequestBody @Valid DownVotePostRequest request){
+        downVotePostUseCase.downvote(request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
+    @PostMapping("/has-voted")
+    public ResponseEntity<GetPreviousVoteResponse> getPreviousVote(@RequestBody @Valid GetPreviousVoteRequest request){
+        GetPreviousVoteResponse res = getPreviousVoteUseCase.getVote(request);
+        return ResponseEntity.ok(res);
     }
 }

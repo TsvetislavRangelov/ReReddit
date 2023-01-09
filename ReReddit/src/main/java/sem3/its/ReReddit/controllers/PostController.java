@@ -10,6 +10,7 @@ import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.*;
 
 import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +24,7 @@ public class PostController {
     private final GetPostsByUserIdUseCase getPostsByUserIdUseCase;
     private final CountPostsForDateUseCase countPostsForDateUseCase;
     private final CountTotalPostsUseCase countTotalPostsUseCase;
+    private final UpvotePostUseCase upvotePostUseCase;
 
     @GetMapping
     public ResponseEntity<GetPostsResponse> getPosts(@RequestParam(defaultValue = "0") int page,
@@ -73,5 +75,13 @@ public class PostController {
         long res = countTotalPostsUseCase.countTotalPosts();
 
         return ResponseEntity.ok(res);
+    }
+
+    @IsAuthenticated
+    @RolesAllowed({"ROLE_ADMIN", "ROLE_STANDARD"})
+    @PatchMapping("/upvote")
+    public ResponseEntity<Void> upvotePost(@RequestBody @Valid UpvotePostRequest request){
+        upvotePostUseCase.upvote(request);
+        return ResponseEntity.noContent().build();
     }
 }

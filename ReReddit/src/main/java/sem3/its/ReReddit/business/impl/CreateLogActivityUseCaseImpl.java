@@ -13,6 +13,7 @@ import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class CreateLogActivityUseCaseImpl implements CreateLogActivityUseCase {
     private ActivityLogEntity saveNewRecord(CreateLogActivityRequest request){
         ActivityLogEntity logEntity = ActivityLogEntity.builder()
                 .profile(request.getProfile())
-                .timestamp(Date.from(Instant.now()))
+                .timestamp(LocalDate.now())
                 .success(request.isSuccess())
                 .build();
         return activityLogRepository.save(logEntity);

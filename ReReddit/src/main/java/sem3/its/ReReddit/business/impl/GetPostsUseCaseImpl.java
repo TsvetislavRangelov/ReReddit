@@ -21,27 +21,19 @@ import java.util.stream.Collectors;
 public class GetPostsUseCaseImpl implements GetPostsUseCase {
     private PostRepository postRepository;
 
-    @Override
-    public GetPostsResponse getPosts(int page, int size){
-        List<PostEntity> results;
-        Pageable pageable = PageRequest.of(page, size);
-        Page<PostEntity> postEntityPage;
 
-        postEntityPage = postRepository.findAll(pageable);
+        @Override
+        public GetPostsResponse getPosts(){
+            List<PostEntity> results;
+            results = postRepository.findAllByOrderByIdDesc();
 
-        results = postEntityPage.getContent();
+            final GetPostsResponse res = new GetPostsResponse();
+            List<Post> posts = results
+                    .stream()
+                    .map(PostConverter::convert)
+                    .collect(Collectors.toList());
+            res.setPosts(posts);
+            return res;
 
-        List<Post> convertedPosts = results.stream().map(PostConverter::convert).toList();
-
-        Map<String, Object> output = new HashMap<>();
-        output.put("posts", convertedPosts);
-        output.put("currentPage", postEntityPage.getNumber());
-        output.put("totalItems", postEntityPage.getTotalElements());
-        output.put("totalPages", postEntityPage.getTotalPages());
-        //results = postRepository.findAll(pageable);
-
-        final GetPostsResponse res = new GetPostsResponse();
-        res.setData(output);
-        return res;
-    }
+        }
 }

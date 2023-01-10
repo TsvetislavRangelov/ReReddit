@@ -9,7 +9,6 @@ import sem3.its.ReReddit.business.security.PasswordHasher;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(MockitoExtension.class)
  class PasswordHasherImplTest {
 
     @Test

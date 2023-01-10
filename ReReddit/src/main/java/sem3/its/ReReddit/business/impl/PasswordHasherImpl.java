@@ -14,11 +14,12 @@ public class PasswordHasherImpl implements PasswordHasher {
         Argon2 argon2 = Argon2Factory.create();
         char[] password = plainText.toCharArray();
         try{
-
             return argon2.hash(10, 65554, 1, password);
         }
-        catch(Exception ignored){}
-        finally{
+        catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
             argon2.wipeArray(password);
         }
         return null;

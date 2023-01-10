@@ -13,6 +13,7 @@ import sem3.its.ReReddit.persistence.entity.CommentEntity;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class CreateCommentUseCaseImpl implements CreateCommentUseCase {
                 .post(postRepository.findById(request.getPostId())
                         .orElseThrow(ResourceDoesNotExistException::new))
                 .body(request.getBody())
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDate.now())
                 .build();
         return commentRepository.save(commentEntity);
     }

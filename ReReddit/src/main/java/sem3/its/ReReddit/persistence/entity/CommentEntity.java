@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,5 +31,5 @@ public class CommentEntity {
     @Column
     private int downs;
     @Column
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 }

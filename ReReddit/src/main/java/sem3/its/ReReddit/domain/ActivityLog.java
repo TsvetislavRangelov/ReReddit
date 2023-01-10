@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ActivityLog {
     private Long id;
-    private Date timestamp;
+    private LocalDate timestamp;
     private String profile;
     private boolean success;
 }

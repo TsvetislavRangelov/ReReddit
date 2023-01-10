@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import sem3.its.ReReddit.business.exception.InvalidAccessTokenException;
 import sem3.its.ReReddit.business.services.AccessTokenDecoder;
+import sem3.its.ReReddit.configuration.Generated;
 import sem3.its.ReReddit.domain.AccessToken;
 
 import javax.servlet.FilterChain;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+@Generated
 @Component
 public class AuthenticationRequestFilter extends OncePerRequestFilter {
     private static final String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";

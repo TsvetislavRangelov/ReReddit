@@ -14,6 +14,7 @@ import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,20 +33,36 @@ import static org.mockito.Mockito.when;
     @Test
     void createPost_ShouldReturnIdOfCreatedPost(){
         UserEntity author = UserEntity.builder().id(3L).build();
-        PostEntity postEntity = PostEntity.builder().author(author).build();
+        PostEntity postEntity = PostEntity.builder().author(author)
+                .body("whatever")
+                .header("whatever")
+                .createdAt(LocalDate.now())
+                .ups(0)
+                .downs(0)
+                .build();
+        PostEntity generatedPostEntity = PostEntity.builder().author(author)
+                .id(1L)
+                .body("whatever")
+                .header("whatever")
+                .createdAt(LocalDate.now())
+                .ups(0)
+                .downs(0)
+                .build();
 
         when(userRepositoryMock.existsById(3L))
                 .thenReturn(true);
         when(userRepositoryMock.findById(3L))
                 .thenReturn(Optional.of(author));
         when(postRepositoryMock.save(postEntity))
-                .thenReturn(postEntity);
+                .thenReturn(generatedPostEntity);
 
-        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().authorId(author.getId()).build());
+        CreatePostResponse actual = createPostUseCase.createPost(CreatePostRequest.builder().authorId(author.getId())
+                .body("whatever")
+                .header("whatever").build());
 
-        CreatePostResponse expected = CreatePostResponse.builder().id(actual.getId()).build();
+        CreatePostResponse expected = CreatePostResponse.builder().id(1L).build();
 
-        assertEquals(expected.getId(), actual.getId());
+        assertEquals(expected, actual);
 
         verify(userRepositoryMock).existsById(3L);
         verify(userRepositoryMock).findById(3L);

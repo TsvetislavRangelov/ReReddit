@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,5 +19,5 @@ public class Comment {
     private String body;
     private int ups;
     private int downs;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 }

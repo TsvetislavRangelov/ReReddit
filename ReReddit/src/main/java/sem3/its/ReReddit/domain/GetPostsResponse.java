@@ -13,5 +13,5 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetPostsResponse {
-    private Map<String, Object> data;
+    private List<Post> posts;
 }

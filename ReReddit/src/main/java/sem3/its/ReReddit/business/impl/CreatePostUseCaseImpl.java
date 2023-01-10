@@ -13,6 +13,7 @@ import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.PostEntity;
 import sem3.its.ReReddit.persistence.entity.UserEntity;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,7 @@ public class CreatePostUseCaseImpl implements CreatePostUseCase {
                 .author(userOptional.get())
                 .body(request.getBody())
                 .header(request.getHeader())
+                .createdAt(LocalDate.now())
                 .build();
         return postRepository.save(postEntity);
     }

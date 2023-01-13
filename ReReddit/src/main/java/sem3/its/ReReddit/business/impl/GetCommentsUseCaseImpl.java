@@ -28,7 +28,7 @@ public class GetCommentsUseCaseImpl implements GetCommentsUseCase {
             throw new ResourceDoesNotExistException();
         }
 
-        final GetCommentsResponse res = new GetCommentsResponse();
+        final var res = new GetCommentsResponse();
         List<Comment> comments = results.stream()
                 .map(CommentConverter::convert)
                 .collect(Collectors.toList());

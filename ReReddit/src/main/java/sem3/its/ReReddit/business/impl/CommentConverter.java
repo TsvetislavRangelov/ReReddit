@@ -1,6 +1,6 @@
 package sem3.its.ReReddit.business.impl;
 
-import org.springframework.beans.BeanUtils;
+
 import sem3.its.ReReddit.domain.Comment;
 import sem3.its.ReReddit.persistence.entity.CommentEntity;
 

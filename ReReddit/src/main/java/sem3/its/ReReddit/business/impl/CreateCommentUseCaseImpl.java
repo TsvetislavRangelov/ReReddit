@@ -10,12 +10,10 @@ import sem3.its.ReReddit.persistence.CommentRepository;
 import sem3.its.ReReddit.persistence.PostRepository;
 import sem3.its.ReReddit.persistence.UserRepository;
 import sem3.its.ReReddit.persistence.entity.CommentEntity;
-import sem3.its.ReReddit.persistence.entity.PostEntity;
-import sem3.its.ReReddit.persistence.entity.UserEntity;
+
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -37,7 +35,7 @@ public class CreateCommentUseCaseImpl implements CreateCommentUseCase {
                !postRepository.existsById(request.getPostId())){
           throw new InvalidRequestBodyException();
        }
-        CommentEntity commentEntity = CommentEntity.builder()
+        var commentEntity = CommentEntity.builder()
                 .ups(0)
                 .downs(0)
                 .author(userRepository.findById(request.getAuthorId())

@@ -25,7 +25,6 @@ public class CountLogActivityForDateUseCaseImpl implements CountLogActivityForDa
         long count = activityLogRepository.countAllByTimestamp(LocalDate.parse(date));
         return CountLogActivityForDateResponse.builder()
                 .count(count)
-                .timestamp(LocalDateTime.now())
                 .build();
     }
 }

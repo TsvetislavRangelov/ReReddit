@@ -9,6 +9,7 @@ import sem3.its.ReReddit.persistence.ActivityLogRepository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
@@ -20,10 +21,8 @@ public class CountLogActivityForDateUseCaseImpl implements CountLogActivityForDa
 
 
     @Override
-    public CountLogActivityForDateResponse countLogActivityForDate(String date) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Date actualDate = formatter.parse(date);
-        long count = activityLogRepository.countAllByTimestamp(actualDate);
+    public CountLogActivityForDateResponse countLogActivityForDate(String date){
+        long count = activityLogRepository.countAllByTimestamp(LocalDate.parse(date));
         return CountLogActivityForDateResponse.builder()
                 .count(count)
                 .timestamp(LocalDateTime.now())

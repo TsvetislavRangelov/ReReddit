@@ -1,12 +1,17 @@
 package sem3.its.ReReddit.business.impl;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sem3.its.ReReddit.business.exception.InvalidRequestBodyException;
+import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
+import sem3.its.ReReddit.business.exception.UsernameAlreadyExistsException;
 import sem3.its.ReReddit.business.security.PasswordHasher;
+import sem3.its.ReReddit.domain.CreateCommentRequest;
 import sem3.its.ReReddit.domain.CreateUserRequest;
 import sem3.its.ReReddit.domain.CreateUserResponse;
 import sem3.its.ReReddit.domain.Enums.Role;
@@ -60,5 +65,25 @@ import static org.mockito.Mockito.*;
 
         verify(userRepositoryMock).save(user);
         verify(passwordHasher).hash(user.getPassword());
+    }
+
+    @Test
+    void createUser_ShouldThrowUsernameAlreadyExistsException() {
+        CreateUserRequest request = CreateUserRequest.builder().username("xd").build();
+        when(userRepositoryMock.existsByUsername("xd"))
+                .thenReturn(true);
+        UsernameAlreadyExistsException exception = Assertions.assertThrows(UsernameAlreadyExistsException.class, () -> {
+           createUserUseCase.createUser(request);
+        }, "RESOURCE_DOESNT_EXIST");
+        Assertions.assertEquals("409 CONFLICT \"USERNAME_ALREADY_EXISTS\"", exception.getMessage());
+    }
+
+    @Test
+    void createUser_ShouldReturnInvalidRequestBodyException(){
+        CreateUserRequest request = CreateUserRequest.builder().username("xd").password("").build();
+        InvalidRequestBodyException exception = Assertions.assertThrows(InvalidRequestBodyException.class, () -> {
+            createUserUseCase.createUser(request);
+        }, "INVALID_REQUEST_BODY");
+        Assertions.assertEquals("400 BAD_REQUEST \"INVALID_REQUEST_BODY\"", exception.getMessage());
     }
 }

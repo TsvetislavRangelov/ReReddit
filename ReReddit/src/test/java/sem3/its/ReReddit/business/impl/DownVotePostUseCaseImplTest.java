@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
 import sem3.its.ReReddit.business.exception.UserHasAlreadyVotedException;
 import sem3.its.ReReddit.domain.DownVotePostRequest;
 import sem3.its.ReReddit.domain.UpvotePostRequest;
@@ -60,7 +61,7 @@ public class DownVotePostUseCaseImplTest {
         verify(postRepository).save(post);
     }
     @Test
-    void upvote_ShouldReturnUserHasAlreadyVotedException() {
+    void downvote_ShouldReturnUserHasAlreadyVotedException() {
         long userId = 1;
         long postId = 1;
         char type = '-';
@@ -74,5 +75,36 @@ public class DownVotePostUseCaseImplTest {
             downVotePostUseCase.downvote(request);
         }, "USER_ALREADY_VOTED");
         assertEquals("409 CONFLICT \"USER_ALREADY_VOTED\"", exception.getMessage());
+    }
+
+    @Test
+    void downvote_ShouldThrowResourceDoesNotExistExceptionForUser() {
+        long userId = 1;
+        long postId = 1;
+        char type = '-';
+        DownVotePostRequest request = DownVotePostRequest.builder().postId(postId).userId(userId).type(type).build();
+
+        when(voteRepository.findByUserIdAndPostId(userId, postId))
+                .thenReturn(Optional.empty());
+        ResourceDoesNotExistException exception = Assertions.assertThrows(ResourceDoesNotExistException.class, () -> {
+           downVotePostUseCase.downvote(request);
+        }, "RESOURCE_DOESNT_EXIST");
+        Assertions.assertEquals("404 NOT_FOUND \"RESOURCE_DOESNT_EXIST\"", exception.getMessage());
+    }
+
+    @Test
+    void downvote_ShouldThrowResourceDoesNotExistExceptionForPost() {
+        long userId = 1;
+        long postId = 1;
+        char type = '-';
+        DownVotePostRequest request = DownVotePostRequest.builder().postId(postId).userId(userId).type(type).build();
+        when(voteRepository.findByUserIdAndPostId(userId, postId))
+                .thenReturn(Optional.empty());
+        when(userRepository.findById(userId))
+                .thenReturn(Optional.of(UserEntity.builder().build()));
+        ResourceDoesNotExistException exception = Assertions.assertThrows(ResourceDoesNotExistException.class, () -> {
+            downVotePostUseCase.downvote(request);
+        }, "RESOURCE_DOESNT_EXIST");
+        Assertions.assertEquals("404 NOT_FOUND \"RESOURCE_DOESNT_EXIST\"", exception.getMessage());
     }
 }

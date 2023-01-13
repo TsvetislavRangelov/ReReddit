@@ -12,6 +12,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class CountLogActivityForDateResponse {
-    private LocalDateTime timestamp;
     private long count;
 }

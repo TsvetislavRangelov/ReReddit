@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sem3.its.ReReddit.business.services.CreateCommentUseCase;
+import sem3.its.ReReddit.business.services.DeleteCommentUseCase;
 import sem3.its.ReReddit.business.services.GetCommentsUseCase;
 import sem3.its.ReReddit.configuration.security.isauthenticated.IsAuthenticated;
 import sem3.its.ReReddit.domain.CreateCommentRequest;
@@ -21,6 +22,7 @@ import javax.annotation.security.RolesAllowed;
 public class CommentController {
     private final CreateCommentUseCase createCommentUseCase;
     private final GetCommentsUseCase getCommentsUseCase;
+    private final DeleteCommentUseCase deleteCommentUseCase;
 
     @IsAuthenticated
     @RolesAllowed({"ROLE_STANDARD", "ROLE_ADMIN"})
@@ -36,4 +38,11 @@ public class CommentController {
         GetCommentsResponse res = getCommentsUseCase.getComments(request);
         return ResponseEntity.ok(res);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") long id){
+        deleteCommentUseCase.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

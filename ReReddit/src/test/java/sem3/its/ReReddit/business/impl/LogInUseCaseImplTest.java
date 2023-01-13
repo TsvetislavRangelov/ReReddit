@@ -1,10 +1,13 @@
 package sem3.its.ReReddit.business.impl;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sem3.its.ReReddit.business.exception.InvalidCredentialsException;
+import sem3.its.ReReddit.business.exception.ResourceDoesNotExistException;
 import sem3.its.ReReddit.business.security.PasswordVerifier;
 import sem3.its.ReReddit.business.services.AccessTokenEncoder;
 import sem3.its.ReReddit.business.services.RefreshTokenService;
@@ -82,5 +85,33 @@ public class LogInUseCaseImplTest {
                 .roles(List.of("STANDARD"))
                 .subject("new").build());
         verify(refreshTokenService).createRefreshToken(1L);
+    }
+
+    @Test
+    void login_ShouldThrowResourceDoesNotExistException(){
+        ResourceDoesNotExistException exception = Assertions.assertThrows(ResourceDoesNotExistException.class, () -> {
+           loginUseCase.login(LoginRequest.builder().email("w").password("123").build());
+        }, "RESOURCE_DOESNT_EXIST");
+        Assertions.assertEquals("404 NOT_FOUND \"RESOURCE_DOESNT_EXIST\"", exception.getMessage());
+    }
+    @Test
+    void login_ShouldThrowNullPointerException() {
+        NullPointerException exception = Assertions.assertThrows(NullPointerException.class, () -> {
+            loginUseCase.login(LoginRequest.builder().build());
+        }, "RESOURCE_DOESNT_EXIST");
+        Assertions.assertEquals("Cannot invoke \"String.toCharArray()\" because the return value of \"sem3.its.ReReddit.domain.LoginRequest.getPassword()\" is null", exception.getMessage());
+    }
+    @Test
+    void login_ShouldThrowInvalidCredentialsException() {
+        LoginRequest request = LoginRequest.builder().email("w").password("123").build();
+        UserEntity user = UserEntity.builder().email("w").password("321").build();
+        when(userRepository.findByEmail("w"))
+                .thenReturn(Optional.of(user));
+        when(passwordVerifier.verify(user.getPassword(), request.getPassword().toCharArray()))
+                .thenReturn(false);
+        InvalidCredentialsException exception = Assertions.assertThrows(InvalidCredentialsException.class, () -> {
+            loginUseCase.login(request);
+        }, "INVALID_CREDENTIALS");
+        Assertions.assertEquals("400 BAD_REQUEST \"INVALID_CREDENTIALS\"", exception.getMessage());
     }
 }

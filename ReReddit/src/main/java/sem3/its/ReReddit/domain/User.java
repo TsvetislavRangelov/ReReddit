@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import sem3.its.ReReddit.domain.Enums.Role;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -23,5 +24,5 @@ public class User {
     private String password;
     private String email;
     private Role role;
-    private Date registeredAt;
+    private LocalDate registeredAt;
 }

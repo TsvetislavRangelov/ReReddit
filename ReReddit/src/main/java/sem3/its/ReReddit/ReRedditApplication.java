@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 public class ReRedditApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		Thread.sleep(5000);
 		SpringApplication.run(ReRedditApplication.class, args);
 	}
 
